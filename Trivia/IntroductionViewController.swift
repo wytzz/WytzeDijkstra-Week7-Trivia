@@ -13,20 +13,7 @@ class IntroductionViewController: UIViewController, UIPickerViewDataSource, UIPi
     @IBAction func numberOfQuestionsSlider(_ sender: UISlider) {
         sliderLabel.text = String(Int(sender.value))
     }
-    
     @IBAction func startButtonPressed(_ sender: UIButton) {
-        QuizController.shared.fetchQuestions(url: "https://opentdb.com/api.php?") { (questions) in
-            if let questions = questions{
-                DispatchQueue.main.async {
-                    self.questions = questions
-                    if self.questions.isEmpty == true {
-                        let alert = UIAlertController(title: "Something went wrong", message: "Try other preferences to get a good quiz!", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
         performSegue(withIdentifier: "QuestionSegue", sender: nil)
         
     }
@@ -73,7 +60,7 @@ class IntroductionViewController: UIViewController, UIPickerViewDataSource, UIPi
                     }
                 }
             }
-        } else {
+        } else { //let "any category work"
             if numberOfQuestionsSlider.value != 0 {
                 newurl.append("&amount=\(Int(numberOfQuestionsSlider.value))")
                 if difficultySegmentedControl.selectedSegmentIndex != 3 {
@@ -130,7 +117,7 @@ class IntroductionViewController: UIViewController, UIPickerViewDataSource, UIPi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "QuestionSegue" {
             let questionViewController = segue.destination as! QuestionViewController
-            questionViewController.newurl = makeURL(with: "https://opentdb.com/api.php?")
+            questionViewController.newurl = makeURL(with: "https://opentdb.com/api.php?") // full url
         }
     }
     

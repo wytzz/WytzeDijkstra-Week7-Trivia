@@ -9,6 +9,7 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
+    
     @IBOutlet weak var resultsLabel: UILabel!
     @IBOutlet weak var highscoreNameTextField: UITextField!
     @IBAction func postScoreButtonPressed(_ sender: UIButton) {
@@ -29,9 +30,13 @@ class ResultsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //edit buttons
         takeAnotherQuizLabel.layer.cornerRadius = 15.0
         postScoreLabel.layer.cornerRadius = 15.0
         navigationItem.hidesBackButton = true
+        navigationItem.title = "Results"
+        
+        
         resultsLabel.text = "You've got \(correctanswers!) correct answers from \(totalquestions!) questions! This gives you a score of \(calculateScore(with: questions!))% Submit you're score to the leaderboards below!"
     }
     

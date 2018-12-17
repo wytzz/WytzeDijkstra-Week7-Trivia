@@ -18,6 +18,7 @@ class HighscoreTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
+        //get highscore json
         QuizController.shared.fetchHighscores() { (highScores) in
             if let highScores = highScores {
                 self.updateUI(with: highScores)
@@ -28,6 +29,7 @@ class HighscoreTableViewController: UITableViewController {
     func updateUI(with highScores: [Playerscore]) {
         DispatchQueue.main.async {
             self.highScores = highScores.sorted{
+                //put higscores in order
                 Double($1.score)! < Double($0.score)!
             }
             self.tableView.reloadData()
@@ -48,6 +50,7 @@ class HighscoreTableViewController: UITableViewController {
         let player = highScores[indexPath.row]
         cell.textLabel?.text = player.name
         cell.detailTextLabel?.text = "\(Double(player.score)!)%"
+        //makes the last submit bold
         if player.id == highScores.count {
             cell.textLabel?.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)
             cell.detailTextLabel?.font = UIFont(name:"HelveticaNeue-Bold", size: 17.0)

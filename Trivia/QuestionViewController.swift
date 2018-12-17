@@ -28,8 +28,8 @@ class QuestionViewController: UIViewController {
     var newurl : String?
     
     @IBAction func answerButton1Pressed(_ sender: UIButton) {
-        if answerButton1.currentTitle == questions[QuestionIndex].correct_answer {
-            correctanswers += 1
+        if answerButton1.currentTitle == questions[QuestionIndex].correct_answer { // checks if selected answer is right
+            correctanswers += 1 // counts correct answers
             nextQuestion()
         } else {
             nextQuestion()
@@ -92,12 +92,13 @@ class QuestionViewController: UIViewController {
             self.booleanStackView.isHidden = true
             self.questions = questions
             let currentquestion = questions[self.QuestionIndex]
-            self.questionLabel.text = currentquestion.question.removingHTMLEntities
-            self.navigationItem.title = "Question \(self.QuestionIndex + 1) of \(questions.count)"
-            if questions[self.QuestionIndex].type == "multiple" {
+            self.questionLabel.text = currentquestion.question.removingHTMLEntities // shows question
+            self.navigationItem.title = "Question \(self.QuestionIndex + 1) of \(questions.count)" // shows the progress in questions
+            if questions[self.QuestionIndex].type == "multiple" {//when the question is multiple choice
                 self.questionStackView.isHidden = false
                 var answers : [String] = currentquestion.incorrect_answers
                 answers.append(currentquestion.correct_answer)
+                //randomizes the list of all the answers, so the last option won't be the correct answer again and again
                 var shuffled = [String]();
                 for _ in 0..<answers.count
                 {
@@ -127,11 +128,13 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
+        //get questions from url
         QuizController.shared.fetchQuestions(url: newurl!) { (questions) in
             if let questions = questions {
                 self.updateUI(with: questions)
             }
         }
+        //edit buttons
         answerButton1.layer.cornerRadius = 15.0
         answerButton2.layer.cornerRadius = 15.0
         answerButton3.layer.cornerRadius = 15.0
